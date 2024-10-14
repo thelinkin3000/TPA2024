@@ -1,0 +1,25 @@
+PROGRAM program0
+  VAR
+    Out1 AT %QX0.0 : BOOL := 0;
+  END_VAR
+  VAR
+    TRU : BOOL := 1;
+    TP0 : TP;
+    TOF0 : TOF;
+    _TMP_NOT24_OUT : BOOL;
+  END_VAR
+
+  TOF0(IN := TP0.Q, PT := T#2500ms);
+  _TMP_NOT24_OUT := NOT(TOF0.Q);
+  TP0(IN := _TMP_NOT24_OUT, PT := T#2500ms);
+  Out1 := TP0.Q;
+END_PROGRAM
+
+
+CONFIGURATION Config0
+
+  RESOURCE Res0 ON PLC
+    TASK task0(INTERVAL := T#20ms,PRIORITY := 0);
+    PROGRAM instance0 WITH task0 : program0;
+  END_RESOURCE
+END_CONFIGURATION

@@ -1,0 +1,23 @@
+PROGRAM program0
+  VAR
+    Out1 AT %QX0.0 : BOOL := 0;
+  END_VAR
+  VAR
+    TRU : BOOL := 1;
+    TP0 : TP;
+    _TMP_NOT5_OUT : BOOL;
+  END_VAR
+
+  TP0(IN := TRU, PT := T#2500ms);
+  _TMP_NOT5_OUT := NOT(TP0.Q);
+  Out1 := _TMP_NOT5_OUT;
+END_PROGRAM
+
+
+CONFIGURATION Config0
+
+  RESOURCE Res0 ON PLC
+    TASK task0(INTERVAL := T#20ms,PRIORITY := 0);
+    PROGRAM instance0 WITH task0 : program0;
+  END_RESOURCE
+END_CONFIGURATION
